@@ -95,7 +95,8 @@ def timestamp():
 if __name__ == '__main__':
     load_dotenv()
     logging.debug(f"[{timestamp()}] Starting backup process...")
-    output_file = f"backups/backup-dump-{timestamp()}.sql"
+    backup_dir = os.getenv('BACKUP_DIRERCTORY')
+    output_file = f"{backup_dir}/backup-dump-{timestamp()}.sql"
 
     generate_mysql_dump(
         user=os.getenv('DB_USERNAME'),
