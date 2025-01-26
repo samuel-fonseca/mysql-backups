@@ -29,7 +29,6 @@ def generate_mysql_dump(
     ]
 
     with open(output_file, 'w', encoding='utf-8') as f:
-        return subprocess.run(['echo', 'test'], stdout=f, stderr=subprocess.PIPE, check=True)
         try:
             subprocess.run(command, stdout=f, stderr=subprocess.PIPE, check=True)
             print(f"Backup generated successfully: {output_file}")
