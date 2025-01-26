@@ -21,9 +21,9 @@ def generate_mysql_dump(
 
     command = [
         "mysqldump",
-        f"--user={user}",
-        f"--password={password}",
-        f"--host={host}",
+        f"-u{user}",
+        f"-p{password}",
+        f"-h{host}",
         database,
     ]
 
