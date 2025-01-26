@@ -39,10 +39,11 @@ if __name__ == '__main__':
     load_dotenv()
     timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     output_file = f"backups/backup-dump-{timestamp}.sql"
+
     generate_mysql_dump(
-        user=os.getenv('MYSQL_USER'),
-        password=os.getenv('MYSQL_PASSWORD'),
-        host=os.getenv('MYSQL_HOST'),
-        database=os.getenv('MYSQL_DATABASE'),
+        user=os.getenv('DB_USERNAME'),
+        password=os.getenv('DB_PASSWORD'),
+        host=os.getenv('DB_HOST'),
+        database=os.getenv('DB_DATABASE'),
         output_file=output_file
     )
