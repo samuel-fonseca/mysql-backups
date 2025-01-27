@@ -1,3 +1,6 @@
 .env
 backups/*
 !backups/.gitkeep
+src/__pycache__/
+*.py[cod]
+*.pyo
