@@ -1,3 +1,5 @@
+import warnings
+
 import subprocess, os, logging, boto3
 from datetime import datetime
 from dotenv import load_dotenv, dotenv_values
@@ -60,7 +62,7 @@ def encrypt_mysql_dump(file, passphrase):
 
     try:
         subprocess.run(command, check=True)
-        print(f"Backup encrypted successfully: {file}.gpg")
+        print(f"Backup encrypted successfully: {encrypted_output_file}")
         return encrypted_output_file
     except subprocess.CalledProcessError as e:
         print("Error encrypting backup:")
@@ -93,6 +95,8 @@ def timestamp():
     return datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 
 if __name__ == '__main__':
+    warnings.warn("This script is deprecated. Use the src/backup.py script instead.", DeprecationWarning)
+
     load_dotenv()
     logging.debug(f"[{timestamp()}] Starting backup process...")
     backup_dir = os.getenv('BACKUP_DIRERCTORY')
@@ -110,9 +114,6 @@ if __name__ == '__main__':
         print("Backup not generated. Upload cancelled.")
         logging.error(f"[{timestamp()}] Backup not generated. Upload cancelled.")
         exit(1)
-    else: 
-        print("Backup generated successfully.")
-        logging.debug(f"[{timestamp()}] Backup generated successfully.")
 
     passphrase = os.getenv('GPG_PASSPHRASE')
 
@@ -127,9 +128,6 @@ if __name__ == '__main__':
         print("Backup not encrypted. Upload cancelled.")
         logging.error(f"[{timestamp()}] Backup not encrypted. Upload cancelled.")
         exit(1)
-    else:
-        print("Backup encrypted successfully.")
-        logging.debug(f"[{timestamp()}] Backup encrypted successfully.")
 
     bucket = os.getenv('AWS_S3_BUCKET')
     object_name = f"backup-dump-{timestamp()}.sql.gpg"
@@ -143,7 +141,3 @@ if __name__ == '__main__':
         print("Backup not uploaded.")
         logging.error(f"[{timestamp()}] Backup not uploaded.")
         exit(1)
-    else:
-        print("Backup uploaded successfully.")
-        logging.debug(f"[{timestamp()}] Backup uploaded successfully.")
-        exit(0)
