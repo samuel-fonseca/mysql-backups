@@ -99,7 +99,7 @@ if __name__ == '__main__':
 
     load_dotenv()
     logging.debug(f"[{timestamp()}] Starting backup process...")
-    backup_dir = os.getenv('BACKUP_DIRERCTORY')
+    backup_dir = os.getenv('BACKUP_DIRECTORY')
     output_file = f"{backup_dir}/backup-dump-{timestamp()}.sql"
 
     generate_mysql_dump(
